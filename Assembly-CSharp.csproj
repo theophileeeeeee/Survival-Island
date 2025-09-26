@@ -84,6 +84,7 @@
     <Compile Include="Assets\Script\CraftingSystem.cs" />
     <Compile Include="Assets\Script\Harvestable.cs" />
     <Compile Include="Assets\Script\Item.cs" />
+    <Compile Include="Assets\Script\ElementsRequired.cs" />
     <Compile Include="Assets\Script\RecipeData.cs" />
     <Compile Include="Assets\Script\ToolTipSystem.cs" />
   </ItemGroup>

@@ -34,7 +34,7 @@ public class Recipe : MonoBehaviour
             GameObject reqItemObj = Instantiate(requiredItemPrefab, requiredItemsParent);
             Image requiredItemImage = reqItemObj.GetComponent<Image>();
             ItemData reqItem = recipeData.requiredItems[i].itemData;
-
+            ElementsRequired elementsRequired = reqItemObj.GetComponent<ElementsRequired>();
 
 
             reqItemObj.GetComponent<Slot>().item = reqItem;
@@ -48,8 +48,9 @@ public class Recipe : MonoBehaviour
                 canCraft = false;
                 requiredItemImage.color = missingColor;
             }
-            reqItemObj.transform.GetChild(0).GetComponent<Image>().sprite = recipeData.requiredItems[i].itemData.visual;
-
+            // configure le visuel de l'élément requis
+            elementsRequired.elementImage.sprite = recipeData.requiredItems[i].itemData.visual;
+            elementsRequired.elementCountText.text = recipeData.requiredItems[i].count.ToString();
         }
 
         craftButton.image.sprite = canCraft ? canBuildSprite : cannotBuildSprite;
@@ -66,7 +67,7 @@ public class Recipe : MonoBehaviour
     {
         for (int i = 0; i < currentRecipe.requiredItems.Length; i++)
         {
-            Inventory.instance.RemoveItem(currentRecipe.requiredItems[i].itemData);
+            Inventory.instance.RemoveItem(currentRecipe.requiredItems[i].itemData, currentRecipe.requiredItems[i].count);
         }
         Inventory.instance.AddItem(currentRecipe.craftableItem);
     }

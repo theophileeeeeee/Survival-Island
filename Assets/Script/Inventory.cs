@@ -55,12 +55,12 @@ public class Inventory : MonoBehaviour
 
         RefreshContent();
     }
-    public void RemoveItem(ItemData item)
+    public void RemoveItem(ItemData item, int count=1)
     {
         ItemInInventory itemInInventory = content.Where(elem => elem.itemData == item).FirstOrDefault();
-        if (itemInInventory.count > 1 && item.stackable)
+        if (itemInInventory.count > count && item.stackable)
         {
-            itemInInventory.count--;
+            itemInInventory.count-=count;
 
         }
         else
