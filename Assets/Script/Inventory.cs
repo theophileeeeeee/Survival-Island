@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Inventory : MonoBehaviour
 {
@@ -11,7 +12,7 @@ public class Inventory : MonoBehaviour
     [Header("Inventory system variables")]
 
     [SerializeField]
-    private List<ItemData> content = new List<ItemData>();
+    private List<ItemInInventory> content = new List<ItemInInventory>();
 
     [SerializeField]
     private GameObject inventoryPanel;
@@ -36,12 +37,36 @@ public class Inventory : MonoBehaviour
     }
     public void AddItem(ItemData item)
     {
-        content.Add(item);
+        ItemInInventory itemInInventory = content.Where(elem => elem.itemData == item).FirstOrDefault();
+        if (itemInInventory != null && item.stackable)
+        {
+            itemInInventory.count++;
+        }
+        else
+        {
+            content.Add
+            (new ItemInInventory
+            {
+                itemData = item,
+                count = 1
+            }
+            );
+        }
+
         RefreshContent();
     }
     public void RemoveItem(ItemData item)
     {
-        content.Remove(item);
+        ItemInInventory itemInInventory = content.Where(elem => elem.itemData == item).FirstOrDefault();
+        if (itemInInventory.count > 1 && item.stackable)
+        {
+            itemInInventory.count--;
+
+        }
+        else
+        {
+            content.Remove(itemInInventory);
+        }
         RefreshContent();
     }
     public void OpenInventory()
@@ -49,7 +74,7 @@ public class Inventory : MonoBehaviour
         inventoryPanel.SetActive(true);
         isOpen = true;
     }
-    public List<ItemData> GetContent()
+    public List<ItemInInventory> GetContent()
     {
         return content;
     }
@@ -83,12 +108,18 @@ public class Inventory : MonoBehaviour
             Slot slot = inventorySlotParent.GetChild(i).GetComponent<Slot>();
             slot.item = null;
             slot.itemVisual.sprite = transparent;
+            slot.countText.enabled = false;
         }
         for (int i = 0; i < content.Count; i++)
         {
             Slot slot = inventorySlotParent.GetChild(i).GetComponent<Slot>();
-            slot.item = content[i];
-            slot.itemVisual.sprite = content[i].visual;
+            slot.item = content[i].itemData;
+            slot.itemVisual.sprite = content[i].itemData.visual;
+            if (slot.item.stackable)
+            {
+                slot.countText.enabled = true;
+                slot.countText.text =content[i].count.ToString();
+            }
         }
         equipment.UpdateEquipmentsDesequipButtons();
         craftingSystem.UpdateDisplayRecipes();
@@ -99,5 +130,13 @@ public class Inventory : MonoBehaviour
         return content.Count == InventorySize;
     }
 
- 
+
+
+}
+
+[System.Serializable]
+public class ItemInInventory
+{
+    public ItemData itemData;
+    public int count;
 }

@@ -17,3 +17,5 @@ MonoBehaviour:
   prefab: {fileID: 7733065591142555063, guid: 14e0ccc152aa91c4b855f2d7b1a34b93, type: 3}
   description: Une simple pierre
   type: 0
+  equipmentType: 0
+  stackable: 1

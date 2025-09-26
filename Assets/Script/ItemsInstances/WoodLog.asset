@@ -18,3 +18,4 @@ MonoBehaviour:
   description: Une buche de bois simple
   type: 0
   equipmentType: 0
+  stackable: 1

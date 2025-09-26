@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using System.Linq;
 
 public class Recipe : MonoBehaviour
 {
@@ -28,16 +29,18 @@ public class Recipe : MonoBehaviour
         CraftableItemImage.transform.parent.GetComponent<Slot>().item = recipeData.craftableItem;
 
         bool canCraft = true;
-        List<ItemData> inventoryCopy = new List<ItemData>(Inventory.instance.GetContent());
         for (int i = 0; i < recipeData.requiredItems.Length; i++)
-        {
-            ItemData reqItem = recipeData.requiredItems[i];
+        { 
             GameObject reqItemObj = Instantiate(requiredItemPrefab, requiredItemsParent);
-            reqItemObj.GetComponent<Slot>().item = reqItem;
             Image requiredItemImage = reqItemObj.GetComponent<Image>();
-            if (inventoryCopy.Contains(reqItem))
+            ItemData reqItem = recipeData.requiredItems[i].itemData;
+
+
+
+            reqItemObj.GetComponent<Slot>().item = reqItem;
+            ItemInInventory itemInInventoryCopy = Inventory.instance.GetContent().Where(elem => elem.itemData == reqItem).FirstOrDefault();
+             if (itemInInventoryCopy!=null && itemInInventoryCopy.count >= recipeData.requiredItems[i].count)
             {
-                inventoryCopy.Remove(reqItem); // Remove one instance to handle duplicates
                 requiredItemImage.color = availableColor;
             }
             else
@@ -45,7 +48,7 @@ public class Recipe : MonoBehaviour
                 canCraft = false;
                 requiredItemImage.color = missingColor;
             }
-            reqItemObj.transform.GetChild(0).GetComponent<Image>().sprite = recipeData.requiredItems[i].visual;
+            reqItemObj.transform.GetChild(0).GetComponent<Image>().sprite = recipeData.requiredItems[i].itemData.visual;
 
         }
 
@@ -63,7 +66,7 @@ public class Recipe : MonoBehaviour
     {
         for (int i = 0; i < currentRecipe.requiredItems.Length; i++)
         {
-            Inventory.instance.RemoveItem(currentRecipe.requiredItems[i]);
+            Inventory.instance.RemoveItem(currentRecipe.requiredItems[i].itemData);
         }
         Inventory.instance.AddItem(currentRecipe.craftableItem);
     }

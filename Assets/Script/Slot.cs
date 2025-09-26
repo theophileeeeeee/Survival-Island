@@ -6,6 +6,7 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public ItemData item;
     public Image itemVisual;
+    public Text countText;
     [SerializeField]
     private ItemsActionSystem itemsActionSystem;
 
