@@ -19,3 +19,4 @@ MonoBehaviour:
   type: 0
   equipmentType: 0
   stackable: 1
+  maxStack: 4

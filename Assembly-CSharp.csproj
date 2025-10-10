@@ -78,6 +78,7 @@
     <Compile Include="Assets\Character\Scripts\MoveBehaviour.cs" />
     <Compile Include="Assets\Character\Scripts\FlyBehaviour.cs" />
     <Compile Include="Assets\Script\EquipmentLibrary.cs" />
+    <Compile Include="Assets\UIManager.cs" />
     <Compile Include="Assets\Script\Equipment.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Script\Slot.cs" />

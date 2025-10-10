@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using NUnit.Framework;
 
 public class InteractBehaviour : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class InteractBehaviour : MonoBehaviour
     private Animator playerAnimator;
     [SerializeField]
     private Inventory inventory;
+    private bool isBusy = false;
     private Item currentItem;
     private Harvestable currentHarvestable;
     [Header("Tools Visuals")]
@@ -21,6 +23,11 @@ public class InteractBehaviour : MonoBehaviour
 
     public void DoPickup(Item item)
     {
+        if (isBusy)
+        {
+            return;
+        }
+        isBusy = true;
         if (inventory.IsFull())
         {
             Debug.Log("Inventory is full, can't pick up" + item.name);
@@ -32,6 +39,11 @@ public class InteractBehaviour : MonoBehaviour
     }
     public void DoHarvest(Harvestable harvestable)
     {
+        if (isBusy)
+        {
+            return;
+        }
+        isBusy = true;
         currentTool = harvestable.Tool;
         EnableToolGameObjectFromEnum(currentTool);
         currentHarvestable = harvestable;
@@ -40,11 +52,13 @@ public class InteractBehaviour : MonoBehaviour
     }
     IEnumerator BreakHarvestable()
     {
+        // permet de désactiver la possibilité d'interagir avec ce Harvestable + d'une fois (passage du layer Harvestable a Default)
+        currentHarvestable.gameObject.layer = LayerMask.NameToLayer("Default");
         if (currentHarvestable.disableKinematicsOnHarvest)
         {
             Rigidbody rb = currentHarvestable.gameObject.GetComponent<Rigidbody>();
             rb.isKinematic = false;
-            rb.AddForce(new Vector3(750, 750, 0), ForceMode.Impulse);
+            rb.AddForce(transform.forward * 800, ForceMode.Impulse);
         }
         yield return new WaitForSeconds(currentHarvestable.destroyDelay);
 
@@ -70,6 +84,7 @@ public class InteractBehaviour : MonoBehaviour
     {
         EnableToolGameObjectFromEnum(currentTool, false);
         playerMovement.canMove = true;
+        isBusy = false;
     }
     public void EnableToolGameObjectFromEnum(Tool tool, bool enable = true)
     {
