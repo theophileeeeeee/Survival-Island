@@ -70,6 +70,7 @@
     <Compile Include="Assets\Script\Interact.cs" />
     <Compile Include="Assets\Character\Scripts\ThirdPersonOrbitCamBasic.cs" />
     <Compile Include="Assets\Script\Recipe.cs" />
+    <Compile Include="Assets\Script\UIManager.cs" />
     <Compile Include="Assets\Script\ItemsActionSystem.cs" />
     <Compile Include="Assets\Script\InteractBehaviour.cs" />
     <Compile Include="Assets\Character\Scripts\BasicBehaviour.cs" />
@@ -78,16 +79,15 @@
     <Compile Include="Assets\Character\Scripts\MoveBehaviour.cs" />
     <Compile Include="Assets\Character\Scripts\FlyBehaviour.cs" />
     <Compile Include="Assets\Script\EquipmentLibrary.cs" />
-    <Compile Include="Assets\UIManager.cs" />
     <Compile Include="Assets\Script\Equipment.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
     <Compile Include="Assets\Script\Slot.cs" />
+    <Compile Include="Assets\Script\PlayerStats.cs" />
     <Compile Include="Assets\Script\CraftingSystem.cs" />
     <Compile Include="Assets\Script\Harvestable.cs" />
     <Compile Include="Assets\Script\Item.cs" />
     <Compile Include="Assets\Script\ElementsRequired.cs" />
     <Compile Include="Assets\Script\RecipeData.cs" />
-    <Compile Include="Assets\PlayerStats.cs" />
     <Compile Include="Assets\Script\ToolTipSystem.cs" />
   </ItemGroup>
   <ItemGroup>

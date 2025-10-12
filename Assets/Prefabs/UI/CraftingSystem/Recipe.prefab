@@ -425,6 +425,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   item: {fileID: 11400000, guid: b3cac7469bdf2334199437efd21bb472, type: 2}
   itemVisual: {fileID: 0}
+  countText: {fileID: 0}
   itemsActionSystem: {fileID: 0}
 --- !u!1 &6487863853370328769
 GameObject:

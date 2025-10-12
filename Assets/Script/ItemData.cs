@@ -2,15 +2,22 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "Item", menuName = "Item/NewItem")]
 public class ItemData : ScriptableObject
 {
+    [Header("Data")]
     public string name;
     public Sprite visual;
     public GameObject prefab;
     public string description;
-    public ItemType type;
-    public EquipmentType equipmentType;
     public bool stackable;
     public int maxStack;
-}
+    [Header("Effects")]
+    public float healthEffect;
+    public float hungerEffect;
+    public float thirstEffect;
+    
+    [Header("Types")]
+    public ItemType type;
+    public EquipmentType equipmentType;
+    }
 public enum ItemType
 {
     Ressource,

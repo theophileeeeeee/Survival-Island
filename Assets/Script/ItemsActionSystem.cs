@@ -3,7 +3,9 @@ using UnityEngine;
 public class ItemsActionSystem : MonoBehaviour
 {
     [Header("Other scripts references")]
-     [SerializeField] private Equipment equipment;
+    [SerializeField] private Equipment equipment;
+    [SerializeField]private PlayerStats playerStats;
+     
     [Header("Items Action System Variables")]
 
     [HideInInspector] public ItemData selectedItem;
@@ -48,7 +50,8 @@ public class ItemsActionSystem : MonoBehaviour
     }
     public void UseActionButton()
     {
-        print("Using " + selectedItem.name);
+        playerStats.ConsumeItem(selectedItem.healthEffect, selectedItem.hungerEffect, selectedItem.thirstEffect);
+        Inventory.instance.RemoveItem(selectedItem);
         CloseActionPanel();
     }
     public void EquipActionButton()
