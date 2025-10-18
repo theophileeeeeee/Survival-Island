@@ -6,6 +6,7 @@ public class Equipment : MonoBehaviour
 {
     [Header("Other scripts references")]
     [SerializeField] private ItemsActionSystem itemsActionSystem;
+    [SerializeField] private PlayerStats playerStats;
 
     [Header("Equipment System Variables")]
     [SerializeField] private Button headSlotDesequipButton;
@@ -37,6 +38,7 @@ public class Equipment : MonoBehaviour
                 equipmentLibraryItem.elementsToDisable[i].SetActive(true);
             }
         }
+        playerStats.currentArmorPoints -= itemToDisable.armorPoints;
         Inventory.instance.AddItem(itemToDisable);
     }
     public void DesequipEquipment(EquipmentType equipmentType)
@@ -83,9 +85,11 @@ public class Equipment : MonoBehaviour
             {
                 equipmentLibraryItem.elementsToDisable[i].SetActive(true);
             }
-            Inventory.instance.AddItem(curentlyEquippedItem);
-            Inventory.instance.RefreshContent();
+
         }
+        playerStats.currentArmorPoints -= curentlyEquippedItem.armorPoints;
+        Inventory.instance.AddItem(curentlyEquippedItem);
+        Inventory.instance.RefreshContent();
     }
     public void UpdateEquipmentsDesequipButtons()
     {
@@ -165,7 +169,7 @@ public class Equipment : MonoBehaviour
                 equipmentLibraryItem.elementsToDisable[i].SetActive(false);
             }
 
-
+            playerStats.currentArmorPoints += itemsActionSystem.selectedItem.armorPoints;
             Inventory.instance.RemoveItem(itemsActionSystem.selectedItem);
 
 

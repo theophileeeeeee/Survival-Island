@@ -52,28 +52,29 @@ public class InteractBehaviour : MonoBehaviour
     }
     IEnumerator BreakHarvestable()
     {
+        Harvestable harvestable = currentHarvestable;
         // permet de désactiver la possibilité d'interagir avec ce Harvestable + d'une fois (passage du layer Harvestable a Default)
-        currentHarvestable.gameObject.layer = LayerMask.NameToLayer("Default");
-        if (currentHarvestable.disableKinematicsOnHarvest)
+        harvestable.gameObject.layer = LayerMask.NameToLayer("Default");
+        if (harvestable.disableKinematicsOnHarvest)
         {
-            Rigidbody rb = currentHarvestable.gameObject.GetComponent<Rigidbody>();
+            Rigidbody rb = harvestable.gameObject.GetComponent<Rigidbody>();
             rb.isKinematic = false;
             rb.AddForce(transform.forward * 800, ForceMode.Impulse);
         }
-        yield return new WaitForSeconds(currentHarvestable.destroyDelay);
+        yield return new WaitForSeconds(harvestable.destroyDelay);
 
-        for (int i = 0; i < currentHarvestable.harvestableItems.Length; i++)
+        for (int i = 0; i < harvestable.harvestableItems.Length; i++)
         {
-            Ressource ressource = currentHarvestable.harvestableItems[i];
+            Ressource ressource = harvestable.harvestableItems[i];
             if (Random.Range(0, 100) <= ressource.dropChance)
             {
                 GameObject instanciatedRessource = Instantiate(ressource.Item.prefab);
-                instanciatedRessource.transform.position = currentHarvestable.transform.position + spawnOffset;
+                instanciatedRessource.transform.position = harvestable.transform.position + spawnOffset;
             }
         }
 
 
-        Destroy(currentHarvestable.gameObject);
+        Destroy(harvestable.gameObject);
     }
     public void AddItemToInventory()
     {

@@ -1,96 +1,139 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
-public class EnnemyAI : MonoBehaviour
+
+public class EnemyAI : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Transform player;
-    [SerializeField] private PlayerStats playerStats;
-    [SerializeField] private NavMeshAgent agent;
-    [SerializeField] private Animator animator;
+
+    [SerializeField]
+    private NavMeshAgent agent;
+
+    [SerializeField]
+    private Animator animator;
+
+    private Transform player;
+    private PlayerStats playerStats;
 
     [Header("Stats")]
-    [SerializeField] private float detectionRadius;
-    [SerializeField] private float attackRadius;
-    [SerializeField] private float walkSpeed;
-    [SerializeField] private float runSpeed;
-    [SerializeField] private float attackDelay;
-    [SerializeField] private int attackDamage;
-    [SerializeField] private float rotationSpeed;
 
-    [Header("Wandering Parameters")]
-    [SerializeField] private float wanderWaitTimeMin;
-    [SerializeField] private float wanderWaitTimeMax;
-    [SerializeField] private float wanderingDistanceMin;
-    [SerializeField] private float wanderingDistanceMax;
+    [SerializeField]
+    private float walkSpeed;
+
+    [SerializeField]
+    private float chaseSpeed;
+
+    [SerializeField]
+    private float detectionRadius;
+
+    [SerializeField]
+    private float attackRadius;
+
+    [SerializeField]
+    private float attackDelay;
+
+    [SerializeField]
+    private float damageDealt;
+
+    [SerializeField]
+    private float rotationSpeed;
+
+    [Header("Wandering parameters")]
+
+    [SerializeField]
+    private float wanderingWaitTimeMin;
+
+    [SerializeField]
+    private float wanderingWaitTimeMax;
+
+    [SerializeField]
+    private float wanderingDistanceMin;
+
+    [SerializeField]
+    private float wanderingDistanceMax;
+
     private bool hasDestination;
     private bool isAttacking;
+
     private void Awake()
     {
-        agent = GetComponent<NavMeshAgent>();
+        Transform playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
+
+        player = playerTransform;
+        playerStats = playerTransform.GetComponent<PlayerStats>();
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (Vector3.Distance(transform.position, player.position) < detectionRadius)
+        if(Vector3.Distance(player.position, transform.position) < detectionRadius && !playerStats.isDead)
         {
-            agent.speed = runSpeed;
+            agent.speed = chaseSpeed;
+
             Quaternion rot = Quaternion.LookRotation(player.position - transform.position);
             transform.rotation = Quaternion.Slerp(transform.rotation, rot, rotationSpeed * Time.deltaTime);
-            if (!isAttacking)
+
+            if(!isAttacking)
             {
-                if (Vector3.Distance(transform.position, player.position) < attackRadius)
+                if (Vector3.Distance(player.position, transform.position) < attackRadius)
                 {
-                    StartCoroutine(attackPlayer());
+                    StartCoroutine(AttackPlayer());
                 }
                 else
                 {
                     agent.SetDestination(player.position);
                 }
             }
-
+            
         }
         else
         {
             agent.speed = walkSpeed;
-            if (agent.remainingDistance < 0.75f && !hasDestination)
-            {
-                StartCoroutine(SetRandomDestination());
 
+            if(agent.remainingDistance < 0.75f && !hasDestination)
+            {
+                StartCoroutine(GetNewDestination());
             }
         }
+
         animator.SetFloat("Speed", agent.velocity.magnitude);
     }
-    IEnumerator SetRandomDestination()
+
+    IEnumerator GetNewDestination()
     {
         hasDestination = true;
-        yield return new WaitForSeconds(Random.Range(wanderWaitTimeMin, wanderWaitTimeMax));
+        yield return new WaitForSeconds(Random.Range(wanderingWaitTimeMin, wanderingWaitTimeMax));
+
         Vector3 nextDestination = transform.position;
-        nextDestination += Random.Range(wanderingDistanceMin, wanderingDistanceMax) * new Vector3(Random.Range(-1, 1), 0, Random.Range(-1, 1)).normalized;
+        nextDestination += Random.Range(wanderingDistanceMin, wanderingDistanceMax) * new Vector3(Random.Range(-1f, 1), 0f, Random.Range(-1f, 1f)).normalized;
+
         NavMeshHit hit;
-        if (NavMesh.SamplePosition(nextDestination, out hit, wanderingDistanceMax, NavMesh.AllAreas))
+        if(NavMesh.SamplePosition(nextDestination, out hit, wanderingDistanceMax, NavMesh.AllAreas))
         {
             agent.SetDestination(hit.position);
         }
         hasDestination = false;
     }
-    IEnumerator attackPlayer()
+
+    IEnumerator AttackPlayer()
     {
         isAttacking = true;
         agent.isStopped = true;
+
         animator.SetTrigger("Attack");
-        playerStats.TakeDamage(attackDamage);
+
+        playerStats.TakeDamage(damageDealt);
+
         yield return new WaitForSeconds(attackDelay);
         agent.isStopped = false;
         isAttacking = false;
     }
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.yellow;
         Gizmos.DrawWireSphere(transform.position, detectionRadius);
+
         Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(transform.position, attackRadius);
     }
 }
-

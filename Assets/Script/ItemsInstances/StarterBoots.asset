@@ -16,5 +16,11 @@ MonoBehaviour:
   visual: {fileID: 21300000, guid: c636fde9129857d409019264abc7ab79, type: 3}
   prefab: {fileID: 4265465371114421531, guid: e2261588b5a2c3c4d874976bd1a5f73a, type: 3}
   description: Des bottes basiques
+  stackable: 0
+  maxStack: 0
+  healthEffect: 0
+  hungerEffect: 0
+  thirstEffect: 0
+  armorPoints: 2
   type: 1
   equipmentType: 3
