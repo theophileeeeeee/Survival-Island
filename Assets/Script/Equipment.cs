@@ -14,18 +14,21 @@ public class Equipment : MonoBehaviour
     [SerializeField] private Button legsSlotDesequipButton;
     [SerializeField] private Button feetSlotDesequipButton;
     [SerializeField] private Button handsSlotDesequipButton;
+    [SerializeField] private Button weaponSlotDesequipButton;
 
     [SerializeField] private EquipmentLibrary equipmentLibrary;
     [SerializeField] Image HeadSlotImage;
     [SerializeField] Image ChestSlotImage;
     [SerializeField] Image LegsSlotImage;
     [SerializeField] Image FeetSlotImage;
+    [SerializeField] Image WeaponSlotImage;
     [SerializeField] Image HandsSlotImage;
     private ItemData equipHead;
     private ItemData equipChest;
     private ItemData equipLegs;
     private ItemData equipFeet;
     private ItemData equipHands;
+    private ItemData equipWeapon;
     private void DisablePreviousEquipedEquipment(ItemData itemToDisable)
     {
         if (itemToDisable == null) return;
