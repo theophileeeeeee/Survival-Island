@@ -28,7 +28,8 @@ public class Equipment : MonoBehaviour
     private ItemData equipLegs;
     private ItemData equipFeet;
     private ItemData equipHands;
-    private ItemData equipWeapon;
+    [HideInInspector]
+    public ItemData equipWeapon;
     private void DisablePreviousEquipedEquipment(ItemData itemToDisable)
     {
         if (itemToDisable == null) return;
@@ -78,6 +79,11 @@ public class Equipment : MonoBehaviour
                 curentlyEquippedItem = equipHands;
                 equipHands = null;
                 HandsSlotImage.sprite = Inventory.instance.transparent;
+                break;
+            case EquipmentType.Weapon:
+                curentlyEquippedItem = equipWeapon;
+                equipWeapon = null;
+                WeaponSlotImage.sprite = Inventory.instance.transparent;
                 break;
         }
         EquipmentLibraryItem equipmentLibraryItem = equipmentLibrary.content.Where(Element => Element.itemData == curentlyEquippedItem).First();
@@ -130,6 +136,12 @@ public class Equipment : MonoBehaviour
             handsSlotDesequipButton.onClick.AddListener(() => DesequipEquipment(EquipmentType.Hands));
             handsSlotDesequipButton.gameObject.SetActive(equipHands != null);
         }
+        if (weaponSlotDesequipButton != null)
+        {
+            weaponSlotDesequipButton.onClick.RemoveAllListeners();
+            weaponSlotDesequipButton.onClick.AddListener(() => DesequipEquipment(EquipmentType.Weapon));
+            weaponSlotDesequipButton.gameObject.SetActive(equipWeapon != null);
+        }
     }
         public void EquipAction()
     {
@@ -164,6 +176,11 @@ public class Equipment : MonoBehaviour
                     DisablePreviousEquipedEquipment(equipHands);
                     HandsSlotImage.sprite = itemsActionSystem.selectedItem.visual;
                     equipHands = itemsActionSystem.selectedItem;
+                    break;
+                case EquipmentType.Weapon:
+                    DisablePreviousEquipedEquipment(equipWeapon);
+                    WeaponSlotImage.sprite = itemsActionSystem.selectedItem.visual;
+                    equipWeapon = itemsActionSystem.selectedItem;
                     break;
             } 
             equipmentLibraryItem.itemPrefab.SetActive(true);

@@ -163469,7 +163469,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 2.2333333
-    functionName: ReEnableMovement
+    functionName: ReEnablePlayerMovement
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
