@@ -9,7 +9,7 @@ public class AimBehaviourBasic : GenericBehaviour
 	public float aimTurnSmoothing = 0.15f;                                // Speed of turn response when aiming to match camera facing.
 	public Vector3 aimPivotOffset = new Vector3(0.5f, 1.2f,  0f);         // Offset to repoint the camera when aiming.
 	public Vector3 aimCamOffset   = new Vector3(0f, 0.4f, -0.7f);         // Offset to relocate the camera when aiming.
-
+	[SerializeField] private PlayerStats playerStats;                                     // Reference to the PlayerStats script.
 	private int aimBool;                                                  // Animator variable related to aiming.
 	private bool aim;                                                     // Boolean to determine whether or not the player is aiming.
 
@@ -24,11 +24,11 @@ public class AimBehaviourBasic : GenericBehaviour
 	void Update ()
 	{
 		// Activate/deactivate aim by input.
-		if (Input.GetAxisRaw(aimButton) != 0 && !aim)
+		if (Input.GetAxisRaw(aimButton) != 0 && !aim && !playerStats.isDead)
 		{
 			StartCoroutine(ToggleAimOn());
 		}
-		else if (aim && Input.GetAxisRaw(aimButton) == 0)
+		else if ((aim && Input.GetAxisRaw(aimButton) == 0)|| playerStats.isDead)
 		{
 			StartCoroutine(ToggleAimOff());
 		}

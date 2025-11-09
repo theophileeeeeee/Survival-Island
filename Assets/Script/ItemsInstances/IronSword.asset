@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   name: Iron Sword
   visual: {fileID: 21300000, guid: d5af6d0e935cbeb4f9f067ca223e3aec, type: 3}
-  prefab: {fileID: 0}
+  prefab: {fileID: 355312524381552382, guid: b84d7ca3927758646a65731cc107aa76, type: 3}
   description: Classic !
   stackable: 0
   maxStack: 0
@@ -22,5 +22,6 @@ MonoBehaviour:
   hungerEffect: 0
   thirstEffect: 0
   armorPoints: 0
+  attackPoints: 20
   type: 1
   equipmentType: 5

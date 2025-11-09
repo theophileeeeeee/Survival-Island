@@ -2,7 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyAI : MonoBehaviour
+public class EnnemyAI : MonoBehaviour
 {
     [Header("References")]
 
@@ -16,6 +16,8 @@ public class EnemyAI : MonoBehaviour
     private PlayerStats playerStats;
 
     [Header("Stats")]
+    [SerializeField] private float maxHealth;
+    [SerializeField] private float currentHealth;
 
     [SerializeField]
     private float walkSpeed;
@@ -54,6 +56,7 @@ public class EnemyAI : MonoBehaviour
 
     private bool hasDestination;
     private bool isAttacking;
+    private bool isDead;
 
     private void Awake()
     {
@@ -61,6 +64,7 @@ public class EnemyAI : MonoBehaviour
 
         player = playerTransform;
         playerStats = playerTransform.GetComponent<PlayerStats>();
+        currentHealth = maxHealth;
     }
 
     void Update()
@@ -97,7 +101,23 @@ public class EnemyAI : MonoBehaviour
 
         animator.SetFloat("Speed", agent.velocity.magnitude);
     }
+    public void TakeDamage(float damage)
+    {
 
+        if (isDead) return;
+        currentHealth -= damage;
+        if (currentHealth <= 0)
+        {
+            isDead = true;
+            animator.SetTrigger("Die");
+            agent.enabled = false;
+            this.enabled = false;
+        }
+        else
+        {
+            animator.SetTrigger("GetHit");
+        }
+    }
     IEnumerator GetNewDestination()
     {
         hasDestination = true;
@@ -124,7 +144,10 @@ public class EnemyAI : MonoBehaviour
         playerStats.TakeDamage(damageDealt);
 
         yield return new WaitForSeconds(attackDelay);
-        agent.isStopped = false;
+        if(agent.enabled)
+        {
+            agent.isStopped = false;
+        }
         isAttacking = false;
     }
 

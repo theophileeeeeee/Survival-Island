@@ -10,6 +10,7 @@ public class UIManager : MonoBehaviour
 
     private float defaultHorizontakAimingSpeed;
     private float defaultVerticalAimingSpeed;
+    [HideInInspector] public bool AtLeastOnePanelActive;
 
     void Start()
     {
@@ -19,7 +20,8 @@ public class UIManager : MonoBehaviour
 
     void Update()
     {
-        if (UIPanels.Any((panel) => panel == panel.activeSelf))
+        AtLeastOnePanelActive = UIPanels.Any((panel) => panel == panel.activeSelf);
+        if (AtLeastOnePanelActive)
         {
             playerCameraScript.horizontalAimingSpeed = 0;
             playerCameraScript.verticalAimingSpeed = 0;

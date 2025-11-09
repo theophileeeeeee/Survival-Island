@@ -1,26 +1,33 @@
 using UnityEngine;
 using System.Collections;
 using NUnit.Framework;
+using System.Linq;
 
 public class InteractBehaviour : MonoBehaviour
 {
-    private Vector3 spawnOffset = new Vector3(0, 0.5f, 0);
+    [Header("References")]
+
     [SerializeField]
     private MoveBehaviour playerMovement;
     [SerializeField]
     private Animator playerAnimator;
     [SerializeField]
     private Inventory inventory;
-    private bool isBusy = false;
-    private Item currentItem;
-    private Harvestable currentHarvestable;
+    [SerializeField] private Equipment equipment;
+    [SerializeField] private EquipmentLibrary equipementLibrary;
+
+    [HideInInspector]
+    public bool isBusy = false;
     [Header("Tools Visuals")]
-    private Tool currentTool;
+
     [SerializeField]
     private GameObject pickAxeVisual;
     [SerializeField]
     private GameObject axeVisual;
-
+    private Vector3 spawnOffset = new Vector3(0, 0.5f, 0);
+    private Tool currentTool;
+    private Item currentItem;
+    private Harvestable currentHarvestable;
     public void DoPickup(Item item)
     {
         if (isBusy)
@@ -89,6 +96,15 @@ public class InteractBehaviour : MonoBehaviour
     }
     public void EnableToolGameObjectFromEnum(Tool tool, bool enable = true)
     {
+        EquipmentLibraryItem equipmentLibraryItem = equipementLibrary.content.Where(Element => Element.itemData == equipment.equipWeapon).First();
+        if (equipmentLibraryItem != null)
+        {
+            equipmentLibraryItem.itemPrefab.SetActive(!enable);
+            for (int i = 0; i < equipmentLibraryItem.elementsToDisable.Length; i++)
+            {
+                equipmentLibraryItem.elementsToDisable[i].SetActive(enable);
+            }
+        }
         switch (tool)
         {
             case Tool.Axe:
