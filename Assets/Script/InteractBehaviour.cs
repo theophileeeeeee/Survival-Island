@@ -96,7 +96,7 @@ public class InteractBehaviour : MonoBehaviour
     }
     public void EnableToolGameObjectFromEnum(Tool tool, bool enable = true)
     {
-        EquipmentLibraryItem equipmentLibraryItem = equipementLibrary.content.Where(Element => Element.itemData == equipment.equipWeapon).First();
+        EquipmentLibraryItem equipmentLibraryItem = equipementLibrary.content.Where(Element => Element.itemData == equipment.equipWeapon).FirstOrDefault();
         if (equipmentLibraryItem != null)
         {
             equipmentLibraryItem.itemPrefab.SetActive(!enable);
