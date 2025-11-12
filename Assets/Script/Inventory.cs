@@ -8,6 +8,7 @@ public class Inventory : MonoBehaviour
     [SerializeField] private Equipment equipment;
     [SerializeField] private ItemsActionSystem itemsActionSystem;
     [SerializeField] private CraftingSystem craftingSystem;
+    [SerializeField] private BuildSystem buildSystem;
 
     [Header("Inventory system variables")]
 
@@ -142,6 +143,7 @@ public class Inventory : MonoBehaviour
         }
         equipment.UpdateEquipmentsDesequipButtons();
         craftingSystem.UpdateDisplayRecipes();
+        buildSystem.UpdateDisplayCosts();
 
     }
     public bool IsFull()

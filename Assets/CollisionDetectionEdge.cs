@@ -1,3 +1,5 @@
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class CollisionDetectionEdge : MonoBehaviour
@@ -12,16 +14,13 @@ public class CollisionDetectionEdge : MonoBehaviour
         hitColliders = Physics.OverlapSphere(transform.position + offset, radius);
         if (hitColliders.Length > 0)
         {
-            foreach (var collider in hitColliders)
+            if (hitColliders.Any(collider => collider.CompareTag(transform.tag)))
             {
-                if (collider.CompareTag(transform.tag))
-                {
-                    return false;
-                }
-                if (collider.CompareTag("Terrain"))
-                {
-                    return true;
-                }
+                return false;
+            }
+            else if(hitColliders.Any(collider => collider.CompareTag("Terrain")))
+            {
+                return true;
             }
         }
             foreach (var point in detectionPoints)

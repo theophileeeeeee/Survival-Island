@@ -24,10 +24,6 @@ public class PointDetectionEdge : MonoBehaviour
                 }
             }
         }
-        else
-        {
-            connected = false;
-        }
     }
     private void OnDrawGizmos()
     {

@@ -4,21 +4,33 @@ using UnityEngine.UIElements;
 
 public class BuildSystem : MonoBehaviour
 {
-    [SerializeField]
-    private Structure[] structures;
+    [SerializeField] private Structure[] structures;
     [SerializeField] Grid3D grid;
-    private StructureType currentStructureType;
+    [SerializeField] private Transform rotationRef;
     [SerializeField] private Material blueMaterial;
     [SerializeField] private Material redMaterial;
-    private bool inPlace;
-    private bool canBuild;
     [SerializeField] private int structureMoveSpeed;
+    [SerializeField] private Transform buildSystemPanel;
+    [SerializeField] private GameObject buildingRequiredElements;
+    private bool inPlace;
+    private Structure currentStructure;
+    private bool canBuild;
     private Vector3 finalPosition;
-    [SerializeField] private Transform rotationRef;
+    private bool systemEnabled;
+
+    void Awake()
+    {
+        currentStructure = structures.First();
+        DisableSystem();
+    }
     private void FixedUpdate()
     {
-        canBuild = GetCurrentStructure().placementPrefab.GetComponentInChildren<CollisionDetectionEdge>().CheckConnection();
-        finalPosition = GetNearestPoint(transform.position);
+        if(!systemEnabled)
+        {
+            return;
+        }
+        canBuild = currentStructure.placementPrefab.GetComponentInChildren<CollisionDetectionEdge>().CheckConnection();
+        finalPosition = grid.GetNearestPointOnGrid(transform.position);
         CheckPosition();
         RoundPlacementStructureRotation();
         UpdatePlacementStructureMaterial();
@@ -27,27 +39,82 @@ public class BuildSystem : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            ChangeStructure(StructureType.Stairs);
+            if (currentStructure.structureType == StructureType.Stairs && systemEnabled)
+            {
+                DisableSystem();
+            }
+            else
+            {
+                ChangeStructure(GetStructureType(StructureType.Stairs));
+            }
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            ChangeStructure(StructureType.Floor);
+            if (currentStructure.structureType == StructureType.Floor && systemEnabled)
+            {
+                DisableSystem();
+            }
+            else
+            {
+                ChangeStructure(GetStructureType(StructureType.Floor));
+            }
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            ChangeStructure(StructureType.Wall);
+            if (currentStructure.structureType == StructureType.Wall && systemEnabled)
+            {
+                DisableSystem();
+            }
+            else
+            {
+                ChangeStructure(GetStructureType(StructureType.Wall));
+            }
         }
         if (Input.GetMouseButtonDown(0))
         {
-            if (inPlace && canBuild)
+            if (inPlace && canBuild && systemEnabled && HasResources())
             {
-                    Instantiate(GetCurrentStructure().instantiatedPrefab, GetCurrentStructure().placementPrefab.transform.position, GetCurrentStructure().placementPrefab.transform.GetChild(0).transform.rotation);
-                }
+                BuildStructure();
+            }
         }
         if (Input.GetKeyDown(KeyCode.R))
         {
             RotateStructure();
         }
+    }
+    void BuildStructure()
+    {
+        Instantiate(currentStructure.instantiatedPrefab, currentStructure.placementPrefab.transform.position, currentStructure.placementPrefab.transform.GetChild(0).transform.rotation);
+        for(int y = 0; y < currentStructure.ressourcesCost.Length; y++)
+        {  
+            for (int i = 0; i < currentStructure.ressourcesCost[y].count; i++)
+            {
+                Inventory.instance.RemoveItem(currentStructure.ressourcesCost[y].itemData);
+            }
+        }
+    }
+    public void UpdateDisplayCosts()
+    {
+        foreach (Transform child in buildSystemPanel)
+        {
+            Destroy(child.gameObject);
+        }
+        foreach(ItemInInventory requiredRessource in currentStructure.ressourcesCost)
+        {
+            GameObject requiredElementsGO = Instantiate(buildingRequiredElements, buildSystemPanel);
+            requiredElementsGO.GetComponent<buildingRequiredElements>().Setup(requiredRessource);
+        }
+    }
+    bool HasResources()
+    {
+        buildingRequiredElements[] requiredElements = GameObject.FindObjectsOfType<buildingRequiredElements>();
+        return requiredElements.All(requiredElements => requiredElements.hasRessource);
+    }
+    void DisableSystem()
+    {
+        systemEnabled = false;
+        buildSystemPanel.gameObject.SetActive(false);
+        currentStructure.placementPrefab.SetActive(false);
     }
     void RoundPlacementStructureRotation()
     {
@@ -69,19 +136,19 @@ public class BuildSystem : MonoBehaviour
         {
             roundedRotation = 270;
         }
-        GetCurrentStructure().placementPrefab.transform.rotation = Quaternion.Euler(0, roundedRotation, 0);
+        currentStructure.placementPrefab.transform.rotation = Quaternion.Euler(0, roundedRotation, 0);
     }
     void RotateStructure()
     {
-        if (currentStructureType != StructureType.Wall)
+        if (currentStructure.structureType != StructureType.Wall)
         {
-             GetCurrentStructure().placementPrefab.transform.GetChild(0).Rotate(0, 90, 0);
+             currentStructure.placementPrefab.transform.GetChild(0).Rotate(0, 90, 0);
         }
         }
     void UpdatePlacementStructureMaterial()
     {
-        MeshRenderer placementMeshRenderer = GetCurrentStructure().placementPrefab.GetComponentInChildren<CollisionDetectionEdge>().meshRenderer;
-        if (inPlace &&canBuild)
+        MeshRenderer placementMeshRenderer = currentStructure.placementPrefab.GetComponentInChildren<CollisionDetectionEdge>().meshRenderer;
+        if (inPlace &&canBuild && HasResources())
         {
             placementMeshRenderer.material = blueMaterial;
         }
@@ -92,7 +159,7 @@ public class BuildSystem : MonoBehaviour
     }
     void CheckPosition()
     {
-        inPlace = GetCurrentStructure().placementPrefab.transform.position == finalPosition;
+        inPlace = currentStructure.placementPrefab.transform.position == finalPosition;
         if (inPlace == false)
         {
             SetPosition(finalPosition);
@@ -100,26 +167,33 @@ public class BuildSystem : MonoBehaviour
     }
     void SetPosition(Vector3 targetPosition)
     {
-        Transform placementPrefabTransform = GetCurrentStructure().placementPrefab.transform;
+        Transform placementPrefabTransform = currentStructure.placementPrefab.transform;
         Vector3 positionVelocity = Vector3.zero;
-        Vector3 newTargetPosition = Vector3.SmoothDamp(placementPrefabTransform.position, targetPosition, ref positionVelocity, 0, structureMoveSpeed);
-        placementPrefabTransform.position = newTargetPosition;
-    }
-    Vector3 GetNearestPoint(Vector3 referencePoint)
-    {
-        return grid.GetNearestPointOnGrid(referencePoint);
-    }
-    void ChangeStructure(StructureType newType)
-    {
-        currentStructureType = newType;
-        foreach (var structure in structures)
+        if (Vector3.Distance(placementPrefabTransform.position, targetPosition) > 10)
         {
-            structure.placementPrefab.SetActive(structure.structureType == newType);
+            placementPrefabTransform.position = targetPosition;
+            return;
+        }
+        else
+        {
+            Vector3 newTargetPosition = Vector3.SmoothDamp(placementPrefabTransform.position, targetPosition, ref positionVelocity, 0, structureMoveSpeed);
+            placementPrefabTransform.position = newTargetPosition;
         }
     }
-    private Structure GetCurrentStructure()
+    void ChangeStructure(Structure newStructure)
     {
-       return structures.Where(elem => elem.structureType == currentStructureType).FirstOrDefault();
+        systemEnabled = true;
+        buildSystemPanel.gameObject.SetActive(true);
+        currentStructure = newStructure;
+        foreach (var structure in structures)
+        {
+            structure.placementPrefab.SetActive(structure.structureType == currentStructure.structureType);
+        }
+        UpdateDisplayCosts();
+    }
+    private Structure GetStructureType(StructureType structureType)
+    {
+        return structures.Where(elem => elem.structureType == structureType).FirstOrDefault();
     }
 }
 
@@ -129,6 +203,7 @@ public class Structure
     public GameObject placementPrefab;
     public GameObject instantiatedPrefab;
     public StructureType structureType;
+    public ItemInInventory[] ressourcesCost;
 }
 public enum StructureType
 {
