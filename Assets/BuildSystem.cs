@@ -107,7 +107,7 @@ public class BuildSystem : MonoBehaviour
     }
     bool HasResources()
     {
-        buildingRequiredElements[] requiredElements = GameObject.FindObjectsOfType<buildingRequiredElements>();
+        buildingRequiredElements[] requiredElements = GameObject.FindObjectsByType<buildingRequiredElements>(FindObjectsSortMode.None);
         return requiredElements.All(requiredElements => requiredElements.hasRessource);
     }
     void DisableSystem()
