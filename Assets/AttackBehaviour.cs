@@ -12,10 +12,16 @@ public class AttackBehaviour : MonoBehaviour
     [SerializeField] private float attackRange;
     [SerializeField] LayerMask attackableLayer;
     [SerializeField] private Vector3 attackOffset;
+    [SerializeField] private GameObject swordVisual;
     private bool isAttacking;
     // Update is called once per frame
     void Update()
     {
+        if (!swordVisual.activeSelf)
+        {
+            return;
+        }
+
         //Debug.DrawRay(transform.position + attackOffset, transform.forward * attackRange, Color.red);
         if (Input.GetMouseButtonDown(0) && CanAttack())
         {

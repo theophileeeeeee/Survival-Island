@@ -12,6 +12,7 @@ TagManager:
   - Wall
   - Stairs
   - Terrain
+  - Arrow
   layers:
   - Default
   - TransparentFX

@@ -2114,10 +2114,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d53421661fb537f4ca97a4e3df517abd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 0}
-  playerStats: {fileID: 0}
   agent: {fileID: 3231432674944145892}
   animator: {fileID: 4269821870452465519}
+  maxHealth: 100
+  currentHealth: 0
   walkSpeed: 2
   chaseSpeed: 4
   detectionRadius: 10

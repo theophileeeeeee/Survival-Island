@@ -72,6 +72,7 @@
     <Compile Include="Assets\Character\Scripts\ThirdPersonOrbitCamBasic.cs" />
     <Compile Include="Assets\Script\Recipe.cs" />
     <Compile Include="Assets\Script\UIManager.cs" />
+    <Compile Include="Assets\BowSystem.cs" />
     <Compile Include="Assets\Script\ItemsActionSystem.cs" />
     <Compile Include="Assets\EnnemyAI.cs" />
     <Compile Include="Assets\Script\InteractBehaviour.cs" />
@@ -97,6 +98,9 @@
     <Compile Include="Assets\POV_Camera.cs" />
     <Compile Include="Assets\CollisionDetectionEdge.cs" />
     <Compile Include="Assets\Script\ToolTipSystem.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Assets\Free medieval weapons\README.txt" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

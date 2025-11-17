@@ -94,7 +94,6 @@ public class Equipment : MonoBehaviour
             {
                 equipmentLibraryItem.elementsToDisable[i].SetActive(true);
             }
-
         }
         playerStats.currentArmorPoints -= curentlyEquippedItem.armorPoints;
         Inventory.instance.AddItem(curentlyEquippedItem);

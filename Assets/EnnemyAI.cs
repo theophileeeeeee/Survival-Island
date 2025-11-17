@@ -66,7 +66,14 @@ public class EnnemyAI : MonoBehaviour
         playerStats = playerTransform.GetComponent<PlayerStats>();
         currentHealth = maxHealth;
     }
-
+    void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("Arrow"))
+        {
+            TakeDamage(20f);
+            Destroy(other.gameObject);
+        }
+    }
     void Update()
     {
         if(Vector3.Distance(player.position, transform.position) < detectionRadius && !playerStats.isDead)
