@@ -59,23 +59,25 @@
     <UnityVersion>6000.0.33f1</UnityVersion>
   </PropertyGroup>
   <ItemGroup>
-    <Analyzer Include="C:\Users\Théophile\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.1.3\Analyzers\Microsoft.Unity.Analyzers.dll" />
+    <Analyzer Include="C:\Users\Théophile\.vscode\extensions\visualstudiotoolsforunity.vstuc-1.2.0\Analyzers\Microsoft.Unity.Analyzers.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.33f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.SourceGenerators.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.33f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.Properties.SourceGenerator.dll" />
     <Analyzer Include="C:\Program Files\Unity\Hub\Editor\6000.0.33f1\Editor\Data\Tools\Unity.SourceGenerators\Unity.UIToolkit.SourceGenerator.dll" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Script\Inventory.cs" />
-    <Compile Include="Assets\BuildSystem.cs" />
+    <Compile Include="Assets\Script\BuildSystem.cs" />
     <Compile Include="Assets\Script\ItemData.cs" />
     <Compile Include="Assets\Script\Interact.cs" />
     <Compile Include="Assets\Character\Scripts\ThirdPersonOrbitCamBasic.cs" />
     <Compile Include="Assets\Script\Recipe.cs" />
     <Compile Include="Assets\Script\UIManager.cs" />
-    <Compile Include="Assets\BowSystem.cs" />
+    <Compile Include="Assets\Script\BowSystem.cs" />
     <Compile Include="Assets\Script\ItemsActionSystem.cs" />
-    <Compile Include="Assets\EnnemyAI.cs" />
+    <Compile Include="Assets\Script\SaveSystem.cs" />
     <Compile Include="Assets\Script\InteractBehaviour.cs" />
+    <Compile Include="Assets\Script\AttackBehaviour.cs" />
+    <Compile Include="Assets\Script\CollisionDetectionEdge.cs" />
     <Compile Include="Assets\Character\Scripts\BasicBehaviour.cs" />
     <Compile Include="Assets\Script\ToolTip.cs" />
     <Compile Include="Assets\Character\Scripts\AimBehaviourBasic.cs" />
@@ -83,20 +85,20 @@
     <Compile Include="Assets\Character\Scripts\FlyBehaviour.cs" />
     <Compile Include="Assets\Script\EquipmentLibrary.cs" />
     <Compile Include="Assets\Script\Equipment.cs" />
+    <Compile Include="Assets\Script\EnnemyAI.cs" />
     <Compile Include="Assets\TutorialInfo\Scripts\Readme.cs" />
-    <Compile Include="Assets\PointDetectionEdge.cs" />
     <Compile Include="Assets\Script\Slot.cs" />
     <Compile Include="Assets\Script\PlayerStats.cs" />
-    <Compile Include="Assets\AttackBehaviour.cs" />
+    <Compile Include="Assets\Script\MainMenu.cs" />
+    <Compile Include="Assets\Script\BuildingRequiredElements.cs" />
+    <Compile Include="Assets\Script\POV_Camera.cs" />
     <Compile Include="Assets\Script\CraftingSystem.cs" />
     <Compile Include="Assets\Script\Harvestable.cs" />
-    <Compile Include="Assets\BuildingRequiredElements.cs" />
-    <Compile Include="Assets\Grid3D.cs" />
+    <Compile Include="Assets\Script\Grid3D.cs" />
+    <Compile Include="Assets\Script\PointDetectionEdge.cs" />
     <Compile Include="Assets\Script\Item.cs" />
     <Compile Include="Assets\Script\ElementsRequired.cs" />
     <Compile Include="Assets\Script\RecipeData.cs" />
-    <Compile Include="Assets\POV_Camera.cs" />
-    <Compile Include="Assets\CollisionDetectionEdge.cs" />
     <Compile Include="Assets\Script\ToolTipSystem.cs" />
   </ItemGroup>
   <ItemGroup>

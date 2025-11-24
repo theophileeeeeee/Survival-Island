@@ -9,7 +9,8 @@ public class BowSystem : MonoBehaviour
     public GameObject arrowPrefab;
     public AimBehaviourBasic aimBehaviour;
     public GameObject bowVisual;
-
+    [SerializeField] AudioClip shootSound;
+    [SerializeField] AudioSource audioSource;
     public LineRenderer trajectoryLine;
 
     [Header("Trajectory Settings")]
@@ -47,18 +48,12 @@ public class BowSystem : MonoBehaviour
         // Début visée
         if (Input.GetMouseButtonDown(1))
         {
-            isAiming = true;
-            arrowLoaded = true;
-
-            bowAnimator.SetBool("BowTension", true);
-            playerAnimator.SetBool("BowTension", true);
-            aimBehaviour.enabled = false;
-
-            // Reset trajectoire
-            trajectoryStarted = false;
-            trajectoryReady = false;
-
+            StartAiming();
             StartCoroutine(TrajectoryRoutine());
+        }
+        if (isAiming)
+        {
+            DrawTrajectory();
         }
 
         // Fin visée
@@ -90,6 +85,19 @@ public class BowSystem : MonoBehaviour
             }
         }
     }
+    void StartAiming()
+    {
+            isAiming = true;
+            arrowLoaded = true;
+
+            bowAnimator.SetBool("BowTension", true);
+            playerAnimator.SetBool("BowTension", true);
+            aimBehaviour.enabled = false;
+
+            // Reset trajectoire
+            trajectoryStarted = false;
+            trajectoryReady = false;
+    }
 
     void StopAiming()
     {
@@ -117,6 +125,7 @@ public class BowSystem : MonoBehaviour
 
     void ShootArrow()
     {
+        audioSource.PlayOneShot(shootSound);
         float camX = Camera.main.transform.eulerAngles.x;
         float camY = Camera.main.transform.eulerAngles.y;
         Vector3 baseDir = Quaternion.Euler(camX, camY, 0) * Vector3.forward;

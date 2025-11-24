@@ -14,6 +14,7 @@ public class EnnemyAI : MonoBehaviour
 
     private Transform player;
     private PlayerStats playerStats;
+    [SerializeField] private AudioSource audioSource;
 
     [Header("Stats")]
     [SerializeField] private float maxHealth;
@@ -147,6 +148,7 @@ public class EnnemyAI : MonoBehaviour
         agent.isStopped = true;
 
         animator.SetTrigger("Attack");
+        audioSource.Play();
 
         playerStats.TakeDamage(damageDealt);
 

@@ -1,4 +1,5 @@
 using UnityEngine;
+using System.Collections;
 
 public class AttackBehaviour : MonoBehaviour
 {
@@ -7,12 +8,15 @@ public class AttackBehaviour : MonoBehaviour
     [SerializeField] private Equipment equipment;
     [SerializeField] private UIManager uiManager;
     [SerializeField] private InteractBehaviour interactBehaviour;
+    [SerializeField] BuildSystem buildSystem;
 
     [Header("Attack parameters")]
     [SerializeField] private float attackRange;
     [SerializeField] LayerMask attackableLayer;
     [SerializeField] private Vector3 attackOffset;
     [SerializeField] private GameObject swordVisual;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip attackSound;
     private bool isAttacking;
     // Update is called once per frame
     void Update()
@@ -36,10 +40,11 @@ public class AttackBehaviour : MonoBehaviour
     }
     bool CanAttack()
     {
-        return equipment.equipWeapon != null && !isAttacking && !uiManager.AtLeastOnePanelActive && !interactBehaviour.isBusy;
+        return equipment.equipWeapon != null && !isAttacking && !uiManager.AtLeastOnePanelActive && !interactBehaviour.isBusy && !buildSystem.systemEnabled;
     }
     void SendAttack()
     {
+        StartCoroutine(WaitAttackSound());
         Debug.Log("Attack sent!");
         RaycastHit hit;
         if (Physics.Raycast(transform.position + attackOffset, transform.forward, out hit, attackRange, attackableLayer))
@@ -51,4 +56,9 @@ public class AttackBehaviour : MonoBehaviour
            }
        }  
    }
+    IEnumerator WaitAttackSound()
+    {
+        yield return new WaitForSeconds(0.1f);
+        audioSource.PlayOneShot(attackSound);
+    }
 }

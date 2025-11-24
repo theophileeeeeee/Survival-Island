@@ -1,22 +1,27 @@
 using UnityEngine;
 using System.Linq;
+using System.Collections.Generic;
 using UnityEngine.UIElements;
 
 public class BuildSystem : MonoBehaviour
 {
     [SerializeField] private Structure[] structures;
     [SerializeField] Grid3D grid;
+    [SerializeField] private Transform placedStructuresParent;
     [SerializeField] private Transform rotationRef;
     [SerializeField] private Material blueMaterial;
     [SerializeField] private Material redMaterial;
     [SerializeField] private int structureMoveSpeed;
     [SerializeField] private Transform buildSystemPanel;
     [SerializeField] private GameObject buildingRequiredElements;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip buildSound;
     private bool inPlace;
     private Structure currentStructure;
     private bool canBuild;
     private Vector3 finalPosition;
-    private bool systemEnabled;
+    public bool systemEnabled;
+    public List<PlacedStucture> placedStructures;
 
     void Awake()
     {
@@ -84,7 +89,8 @@ public class BuildSystem : MonoBehaviour
     }
     void BuildStructure()
     {
-        Instantiate(currentStructure.instantiatedPrefab, currentStructure.placementPrefab.transform.position, currentStructure.placementPrefab.transform.GetChild(0).transform.rotation);
+        audioSource.PlayOneShot(buildSound);
+        Instantiate(currentStructure.instantiatedPrefab, currentStructure.placementPrefab.transform.position, currentStructure.placementPrefab.transform.GetChild(0).transform.rotation, placedStructuresParent);
         for(int y = 0; y < currentStructure.ressourcesCost.Length; y++)
         {  
             for (int i = 0; i < currentStructure.ressourcesCost[y].count; i++)
@@ -92,6 +98,12 @@ public class BuildSystem : MonoBehaviour
                 Inventory.instance.RemoveItem(currentStructure.ressourcesCost[y].itemData);
             }
         }
+        placedStructures.Add(new PlacedStucture
+        {
+            structurePrefab = currentStructure.instantiatedPrefab,
+            position = currentStructure.placementPrefab.transform.position,
+            rotation = currentStructure.placementPrefab.transform.GetChild(0).transform.rotation
+        });
     }
     public void UpdateDisplayCosts()
     {
@@ -195,6 +207,16 @@ public class BuildSystem : MonoBehaviour
     {
         return structures.Where(elem => elem.structureType == structureType).FirstOrDefault();
     }
+    public void LoadStructures(PlacedStucture[] structuresToLoad)
+    {
+        foreach(var structure in structuresToLoad)
+        {
+            placedStructures.Add(structure);
+            GameObject newStructure = Instantiate(structure.structurePrefab, structure.position, structure.rotation, placedStructuresParent);
+            newStructure.transform.position = structure.position;
+            newStructure.transform.rotation = structure.rotation;
+        }
+    }
 }
 
 [System.Serializable]
@@ -210,4 +232,11 @@ public enum StructureType
     Stairs,
     Wall,
     Floor
+}
+[System.Serializable]
+public class PlacedStucture
+{
+    public GameObject structurePrefab;
+    public Vector3 position;
+    public Quaternion rotation;
 }

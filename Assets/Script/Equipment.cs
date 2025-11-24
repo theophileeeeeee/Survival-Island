@@ -23,13 +23,21 @@ public class Equipment : MonoBehaviour
     [SerializeField] Image FeetSlotImage;
     [SerializeField] Image WeaponSlotImage;
     [SerializeField] Image HandsSlotImage;
-    private ItemData equipHead;
-    private ItemData equipChest;
-    private ItemData equipLegs;
-    private ItemData equipFeet;
-    private ItemData equipHands;
+    [HideInInspector]
+    public ItemData equipHead;
+    [HideInInspector]
+    public ItemData equipChest;
+    [HideInInspector]
+    public ItemData equipLegs;
+    [HideInInspector]
+    public ItemData equipFeet;
+    [HideInInspector]
+    public ItemData equipHands;
     [HideInInspector]
     public ItemData equipWeapon;
+
+    [SerializeField] private AudioClip equipSound;
+    [SerializeField] private AudioSource audioSource;
     private void DisablePreviousEquipedEquipment(ItemData itemToDisable)
     {
         if (itemToDisable == null) return;
@@ -86,7 +94,7 @@ public class Equipment : MonoBehaviour
                 WeaponSlotImage.sprite = Inventory.instance.transparent;
                 break;
         }
-        EquipmentLibraryItem equipmentLibraryItem = equipmentLibrary.content.Where(Element => Element.itemData == curentlyEquippedItem).First();
+        EquipmentLibraryItem equipmentLibraryItem = equipmentLibrary.content.Where(Element => Element.itemData == curentlyEquippedItem).FirstOrDefault();
         if (equipmentLibraryItem != null)
         {
             equipmentLibraryItem.itemPrefab.SetActive(false);
@@ -95,8 +103,11 @@ public class Equipment : MonoBehaviour
                 equipmentLibraryItem.elementsToDisable[i].SetActive(true);
             }
         }
-        playerStats.currentArmorPoints -= curentlyEquippedItem.armorPoints;
-        Inventory.instance.AddItem(curentlyEquippedItem);
+        if (curentlyEquippedItem != null)
+        {
+            playerStats.currentArmorPoints -= curentlyEquippedItem.armorPoints;
+            Inventory.instance.AddItem(curentlyEquippedItem);
+        }
         Inventory.instance.RefreshContent();
     }
     public void UpdateEquipmentsDesequipButtons()
@@ -142,44 +153,45 @@ public class Equipment : MonoBehaviour
             weaponSlotDesequipButton.gameObject.SetActive(equipWeapon != null);
         }
     }
-        public void EquipAction()
+        public void EquipAction(ItemData equipment=null)
     {
-        print("Equipping " + itemsActionSystem.selectedItem.name);
-        EquipmentLibraryItem equipmentLibraryItem = equipmentLibrary.content.Where(Element => Element.itemData == itemsActionSystem.selectedItem).First();
+        ItemData itemToEquip = equipment ? equipment : itemsActionSystem.selectedItem;
+        print("Equipping " + itemToEquip.name);
+        EquipmentLibraryItem equipmentLibraryItem = equipmentLibrary.content.Where(Element => Element.itemData == itemToEquip).First();
         if (equipmentLibraryItem != null)
         {
 
-            switch (itemsActionSystem.selectedItem.equipmentType)
+            switch (itemToEquip.equipmentType)
             {
                 case EquipmentType.Head:
                 DisablePreviousEquipedEquipment(equipHead);
-                    HeadSlotImage.sprite = itemsActionSystem.selectedItem.visual;
-                    equipHead = itemsActionSystem.selectedItem;
+                    HeadSlotImage.sprite = itemToEquip.visual;
+                    equipHead = itemToEquip;
                     break;
                 case EquipmentType.Chest:
                     DisablePreviousEquipedEquipment(equipChest);
-                    ChestSlotImage.sprite = itemsActionSystem.selectedItem.visual;
-                    equipChest = itemsActionSystem.selectedItem;
+                    ChestSlotImage.sprite = itemToEquip.visual;
+                    equipChest = itemToEquip;
                     break;
                 case EquipmentType.Legs:
                     DisablePreviousEquipedEquipment(equipLegs);
-                    LegsSlotImage.sprite = itemsActionSystem.selectedItem.visual;
-                    equipLegs = itemsActionSystem.selectedItem;
+                    LegsSlotImage.sprite = itemToEquip.visual;
+                    equipLegs = itemToEquip;
                     break;
                 case EquipmentType.Feet:
                     DisablePreviousEquipedEquipment(equipFeet);
-                    FeetSlotImage.sprite = itemsActionSystem.selectedItem.visual;
-                    equipFeet = itemsActionSystem.selectedItem;
+                    FeetSlotImage.sprite = itemToEquip.visual;
+                    equipFeet = itemToEquip;
                     break;
                 case EquipmentType.Hands:
                     DisablePreviousEquipedEquipment(equipHands);
-                    HandsSlotImage.sprite = itemsActionSystem.selectedItem.visual;
-                    equipHands = itemsActionSystem.selectedItem;
+                    HandsSlotImage.sprite = itemToEquip.visual;
+                    equipHands = itemToEquip;
                     break;
                 case EquipmentType.Weapon:
                     DisablePreviousEquipedEquipment(equipWeapon);
-                    WeaponSlotImage.sprite = itemsActionSystem.selectedItem.visual;
-                    equipWeapon = itemsActionSystem.selectedItem;
+                    WeaponSlotImage.sprite = itemToEquip.visual;
+                    equipWeapon =  itemToEquip;
                     break;
             } 
             equipmentLibraryItem.itemPrefab.SetActive(true);
@@ -188,17 +200,32 @@ public class Equipment : MonoBehaviour
                 equipmentLibraryItem.elementsToDisable[i].SetActive(false);
             }
 
-            playerStats.currentArmorPoints += itemsActionSystem.selectedItem.armorPoints;
-            Inventory.instance.RemoveItem(itemsActionSystem.selectedItem);
+            playerStats.currentArmorPoints += itemToEquip.armorPoints;
+            Inventory.instance.RemoveItem(itemToEquip);
+            audioSource.PlayOneShot(equipSound);
 
 
         }
         else
         {
-            Debug.LogError("No prefab found for this item in the Equipment Library: " + itemsActionSystem.selectedItem.name);
+            Debug.LogError("No prefab found for this item in the Equipment Library: " + itemToEquip.name);
         }
         itemsActionSystem.CloseActionPanel();
     }
-
+    public void LoadEquipments(ItemData[] savedEquipments)
+    {
+        Inventory.instance.ClearInventory();
+        foreach(EquipmentType equipmentType in System.Enum.GetValues(typeof(EquipmentType)))
+        {
+            DesequipEquipment(equipmentType);
+        }
+        foreach(ItemData itemData in savedEquipments)
+        {
+            if(itemData != null)
+            {
+                EquipAction(itemData);
+            }
+        }
+    }
 
 }

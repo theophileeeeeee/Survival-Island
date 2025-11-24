@@ -125,12 +125,12 @@ public class PlayerStats : MonoBehaviour
         UpdateHealthBarFill();
     }
 
-    void UpdateHealthBarFill()
+    public void UpdateHealthBarFill()
     {
         healthBarFill.fillAmount = currentHealth / maxHealth;
     }
 
-    void UpdateHungerAndThirstBarsFill()
+    public void UpdateHungerAndThirstBarsFill()
     {
         // Diminue la faim / soif au fil du temps
         currentHunger -= hungerDecreaseRate * Time.deltaTime;

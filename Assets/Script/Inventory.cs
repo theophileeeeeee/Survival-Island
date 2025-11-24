@@ -152,7 +152,15 @@ public class Inventory : MonoBehaviour
     }
 
 
-
+    public void SetContent(List<ItemInInventory> newContent)
+    {
+        content = newContent;
+        RefreshContent();
+    }
+    public void ClearInventory()
+    {
+        content.Clear();
+    }
 }
 
 [System.Serializable]
