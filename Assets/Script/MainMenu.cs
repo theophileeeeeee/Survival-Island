@@ -57,20 +57,7 @@ public class MainMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            if (pausepanel != null)
-            {
-                bool newState = !pausepanel.activeSelf;
-                pausepanel.SetActive(newState);
-
-                if (!newState)
-                    optionsPanel.SetActive(false);
-
-                Time.timeScale = newState ? 0f : 1f;
-            }
-            else
-            {
-                Debug.LogWarning("pausepanel n'est pas assigné dans l'inspector !");
-            }
+            ChangePanelState();
         }
 
         if (saveButton != null)
@@ -102,6 +89,23 @@ public class MainMenu : MonoBehaviour
         string json = File.ReadAllText(audioFilePath);
         AudioData data = JsonUtility.FromJson<AudioData>(json);
         return data.volume;
+    }
+    public void ChangePanelState()
+    {
+        if (pausepanel != null)
+            {
+                bool newState = !pausepanel.activeSelf;
+                pausepanel.SetActive(newState);
+
+                if (!newState)
+                    optionsPanel.SetActive(false);
+
+                Time.timeScale = newState ? 0f : 1f;
+            }
+            else
+            {
+                Debug.LogWarning("pausepanel n'est pas assigné dans l'inspector !");
+            }
     }
 
     public void SaveAudioSettings(float volume)

@@ -16,6 +16,11 @@ public class BuildSystem : MonoBehaviour
     [SerializeField] private GameObject buildingRequiredElements;
     [SerializeField] private AudioSource audioSource;
     [SerializeField] private AudioClip buildSound;
+    [SerializeField] private GameObject buildCursor;
+    [SerializeField] private float floorCursorX = 0f;
+    [SerializeField] private float wallCursorX = 100f;
+    [SerializeField] private float stairsCursorX = -100f;
+
     private bool inPlace;
     private Structure currentStructure;
     private bool canBuild;
@@ -86,6 +91,34 @@ public class BuildSystem : MonoBehaviour
         {
             RotateStructure();
         }
+        if (systemEnabled)
+        {
+            buildCursor.SetActive(true);
+        Vector3 cursorPos = buildCursor.transform.localPosition;
+
+        switch (currentStructure.structureType)
+        {
+            case StructureType.Floor:
+            cursorPos.x = floorCursorX;    // valeur à définir
+            break;
+
+            case StructureType.Wall:
+            cursorPos.x = wallCursorX;     // valeur à définir
+            break;
+
+            case StructureType.Stairs:
+            cursorPos.x = stairsCursorX;   // valeur à définir
+            break;
+        }
+
+            // On applique la nouvelle position
+            buildCursor.transform.localPosition = cursorPos;
+        }
+        else
+        {
+            buildCursor.SetActive(false);
+        }
+
     }
     void BuildStructure()
     {
