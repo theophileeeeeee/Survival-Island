@@ -66,10 +66,10 @@ MonoBehaviour:
   m_SerializedViewNames:
   - UnityEditor.DeviceSimulation.SimulatorWindow
   m_SerializedViewValues:
-  - C:\Users\theop\My project (11)\Library\PlayModeViewStates\51321c6355efd0d4cafcac7812901ac6
+  - "C:\\Users\\Th\xE9ophile\\Documents\\GitHub\\Survival-Island\\Library\\PlayModeViewStates\\6784d2602128bf044aff32bb3793ef8e"
   m_PlayModeViewName: GameView
   m_ShowGizmos: 0
-  m_TargetDisplay: 0
+  m_TargetDisplay: 1
   m_ClearColor: {r: 0, g: 0, b: 0, a: 0}
   m_TargetSize: {x: 1920, y: 1080}
   m_TextureFilterMode: 0
@@ -194,10 +194,10 @@ MonoBehaviour:
     m_OverlaysVisible: 1
   m_SceneHierarchy:
     m_TreeViewState:
-      scrollPos: {x: 0, y: 0}
-      m_SelectedIDs: 
-      m_LastClickedID: 0
-      m_ExpandedIDs: f2fef8ff700af9ff8434fbff5a35fbff20fbffffc2a80000eea9000016aa0000
+      scrollPos: {x: 0, y: 402}
+      m_SelectedIDs: 90cffeff
+      m_LastClickedID: -77936
+      m_ExpandedIDs: 64d5feff88d6feffd2e1feff20fbffff
       m_RenameOverlay:
         m_UserAcceptedRename: 0
         m_Name: 
@@ -267,14 +267,14 @@ MonoBehaviour:
     y: 0
     width: 1500
     height: 914
-  m_MinSize: {x: 201, y: 226}
-  m_MaxSize: {x: 4001, y: 4026}
+  m_MinSize: {x: 202, y: 226}
+  m_MaxSize: {x: 4002, y: 4026}
   m_ActualView: {fileID: 2}
   m_Panes:
   - {fileID: 7}
-  - {fileID: 2}
   - {fileID: 8}
-  m_Selected: 1
+  - {fileID: 2}
+  m_Selected: 2
   m_LastSelected: 0
 --- !u!114 &7
 MonoBehaviour:
@@ -827,9 +827,9 @@ MonoBehaviour:
   m_AudioPlay: 0
   m_DebugDrawModesUseInteractiveLightBakingData: 0
   m_Position:
-    m_Target: {x: -43.546898, y: -174.39667, z: 287.3029}
+    m_Target: {x: -15.243018, y: -121.22888, z: -176.4087}
     speed: 2
-    m_Value: {x: -43.546898, y: -174.39667, z: 287.3029}
+    m_Value: {x: -15.243018, y: -121.22888, z: -176.4087}
   m_RenderMode: 0
   m_CameraMode:
     drawMode: 0
@@ -875,13 +875,13 @@ MonoBehaviour:
     m_GridAxis: 1
     m_gridOpacity: 0.5
   m_Rotation:
-    m_Target: {x: 0.41600862, y: 0.03214934, z: -0.014728532, w: 0.90874165}
+    m_Target: {x: -0.0051386016, y: 0.9482236, z: -0.3171907, w: -0.0153617915}
     speed: 2
-    m_Value: {x: -0.4160086, y: -0.03214934, z: 0.014728531, w: -0.90874165}
+    m_Value: {x: -0.005138601, y: 0.9482235, z: -0.31719068, w: -0.01536179}
   m_Size:
-    m_Target: 851.6827
+    m_Target: 191.53566
     speed: 2
-    m_Value: 851.6827
+    m_Value: 191.53566
   m_Ortho:
     m_Target: 0
     speed: 2
@@ -899,7 +899,7 @@ MonoBehaviour:
     m_FarClip: 10000
     m_DynamicClip: 1
     m_OcclusionCulling: 0
-  m_LastSceneViewRotation: {x: 0.56700355, y: 0.21522394, z: -0.15655135, w: 0.7796158}
+  m_LastSceneViewRotation: {x: -0.08717229, y: 0.89959055, z: -0.21045254, w: -0.3726226}
   m_LastSceneViewOrtho: 0
   m_Viewpoint:
     m_SceneView: {fileID: 7}
@@ -1062,7 +1062,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 12006, guid: 0000000000000000e000000000000000, type: 0}
-  m_Name: ProjectBrowser
+  m_Name: ConsoleWindow
   m_EditorClassIdentifier: 
   m_Children: []
   m_Position:
@@ -1071,15 +1071,15 @@ MonoBehaviour:
     y: 914
     width: 1500
     height: 379
-  m_MinSize: {x: 232, y: 276}
-  m_MaxSize: {x: 10002, y: 10026}
-  m_ActualView: {fileID: 10}
+  m_MinSize: {x: 102, y: 126}
+  m_MaxSize: {x: 4002, y: 4026}
+  m_ActualView: {fileID: 11}
   m_Panes:
   - {fileID: 10}
   - {fileID: 11}
   - {fileID: 12}
-  m_Selected: 0
-  m_LastSelected: 1
+  m_Selected: 1
+  m_LastSelected: 0
 --- !u!114 &10
 MonoBehaviour:
   m_ObjectHideFlags: 52
@@ -1127,7 +1127,7 @@ MonoBehaviour:
     m_SkipHidden: 0
     m_SearchArea: 1
     m_Folders:
-    - Assets/Scenes
+    - Assets
     m_Globs: []
     m_ProductIds: 
     m_AnyWithAssetOrigin: 0
@@ -1137,16 +1137,16 @@ MonoBehaviour:
   m_ViewMode: 1
   m_StartGridSize: 53
   m_LastFolders:
-  - Assets/Scenes
+  - Assets
   m_LastFoldersGridSize: 53
   m_LastProjectPath: "C:\\Users\\Th\xE9ophile\\Documents\\GitHub\\Survival-Island"
   m_LockTracker:
     m_IsLocked: 0
   m_FolderTreeState:
     scrollPos: {x: 0, y: 79}
-    m_SelectedIDs: 66bb0000
-    m_LastClickedID: 47974
-    m_ExpandedIDs: 0000000026b9000028b900002ab900002cb900002eb9000030b9000032b9000034b9000036b9000038b9000000ca9a3bffffff7f
+    m_SelectedIDs: d6b40000
+    m_LastClickedID: 46294
+    m_ExpandedIDs: 00000000d6b40000d8b40000dab40000dcb40000deb40000e0b40000e2b40000e4b40000e6b40000e8b40000eab4000000ca9a3bffffff7f
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1175,7 +1175,7 @@ MonoBehaviour:
     scrollPos: {x: 0, y: 0}
     m_SelectedIDs: 
     m_LastClickedID: 0
-    m_ExpandedIDs: 0000000026b9000028b900002ab900002cb900002eb9000030b9000032b9000034b9000036b9000038b9000000ca9a3bffffff7f
+    m_ExpandedIDs: 00000000d6b40000d8b40000dab40000dcb40000deb40000e0b40000e2b40000e4b40000e6b40000e8b40000eab40000
     m_RenameOverlay:
       m_UserAcceptedRename: 0
       m_Name: 
@@ -1201,8 +1201,8 @@ MonoBehaviour:
       m_Icon: {fileID: 0}
       m_ResourceFile: 
   m_ListAreaState:
-    m_SelectedInstanceIDs: 
-    m_LastClickedInstanceID: 0
+    m_SelectedInstanceIDs: 1245feff
+    m_LastClickedInstanceID: -113390
     m_HadKeyboardFocusLastEvent: 1
     m_ExpandedInstanceIDs: c6230000c40a0100b6af0000180b010070b8000090c3000068bd0000c2d000001ac100000cc60000941c01002ec7000092ce00006cc90000d2c800006ccd0000d2cc00007acf00005afb0000d2ca0000842f010042cb000074cb000074e900009ecb00002afb00004add000042d00000323d0200341301001aea0000cc2f0100d6aa01003aef0000240b0100b45701000067010000080100f0d500001cd1000006d2000028fc00005e0501001635010066d10000e84101000cd200002ad8000068e80000000000007ed8000030e00000ec3c01001a1201006ad00000161e01009ed000008adf00009ec90100745e010034d100008ad10000461001004e1601005cd40000fa060100c88f020094fc0100feab0000feac000060af00006aaf0000caae00003ed5000030b800007cb900008eba00004ae30000ecbd0000
     m_RenameOverlay:
@@ -1290,10 +1290,10 @@ MonoBehaviour:
     m_TextWithWhitespace: "Audio Mixer\u200B"
   m_Pos:
     serializedVersion: 2
-    x: 275
-    y: 990
-    width: 653
-    height: 348
+    x: 531
+    y: 993
+    width: 1498
+    height: 353
   m_SerializedDataModeController:
     m_DataMode: 0
     m_PreferredDataMode: 0
@@ -1425,12 +1425,12 @@ MonoBehaviour:
       oldMaxSizes: 
       oldSplitSize: 0
     m_HorizontalSplitter:
-      ID: 2263
+      ID: 49845
       splitterInitialOffset: 0
       currentActiveSplitter: -1
       realSizes:
-      - 196
-      - 457
+      - 449
+      - 1049
       relativeSizes:
       - 0.3
       - 0.7
@@ -1440,7 +1440,7 @@ MonoBehaviour:
       maxSizes:
       - 0
       - 0
-      lastTotalSize: 653
+      lastTotalSize: 1498
       splitSize: 6
       xOffset: 0
       m_Version: 1
