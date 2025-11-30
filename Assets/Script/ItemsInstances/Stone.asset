@@ -16,7 +16,12 @@ MonoBehaviour:
   visual: {fileID: 21300000, guid: f7111abcf951a1f4398426869d06640b, type: 3}
   prefab: {fileID: 7733065591142555063, guid: 14e0ccc152aa91c4b855f2d7b1a34b93, type: 3}
   description: Une simple pierre
+  stackable: 1
+  maxStack: 80
+  healthEffect: 0
+  hungerEffect: 0
+  thirstEffect: 0
+  armorPoints: 0
+  attackPoints: 0
   type: 0
   equipmentType: 0
-  stackable: 1
-  maxStack: 3

@@ -17,9 +17,11 @@ MonoBehaviour:
   prefab: {fileID: 4745661115560378933, guid: 3ff9c98c0990fce468bb0d49a51b6461, type: 3}
   description: Water is a vital for all forms of life
   stackable: 1
-  maxStack: 3
+  maxStack: 4
   healthEffect: 0
   hungerEffect: 0
   thirstEffect: 20
+  armorPoints: 0
+  attackPoints: 0
   type: 2
   equipmentType: 0

@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class Interact : MonoBehaviour
 {
-    private float interactionRange = 2.6f;
+    public float interactionRange = 2.6f;
     [SerializeField]
     public LayerMask itemLayer;
 
@@ -34,4 +34,13 @@ public class Interact : MonoBehaviour
             interactText.SetActive(false);
         }
     }
+    void OnDrawGizmosSelected()
+{
+    Gizmos.color = Color.yellow;
+    Gizmos.DrawLine(transform.position, transform.position + transform.forward * interactionRange);
+
+    // Petite sphère à la fin du ray
+    Gizmos.DrawSphere(transform.position + transform.forward * interactionRange, 0.05f);
+}
+
 }

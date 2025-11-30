@@ -15,6 +15,6 @@ MonoBehaviour:
   craftableItem: {fileID: 11400000, guid: b3cac7469bdf2334199437efd21bb472, type: 2}
   requiredItems:
   - itemData: {fileID: 11400000, guid: 5c249d76d2a9fbe4a8889134c3360ce8, type: 2}
-    count: 2
-  - itemData: {fileID: 11400000, guid: 0e1e4785f93516440baaa90c2fba28e4, type: 2}
     count: 1
+  - itemData: {fileID: 11400000, guid: 2b9a84d0423038741a0f87481a5c3e2f, type: 2}
+    count: 3

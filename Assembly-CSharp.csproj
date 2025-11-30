@@ -79,6 +79,7 @@
     <Compile Include="Assets\Script\AttackBehaviour.cs" />
     <Compile Include="Assets\Script\CollisionDetectionEdge.cs" />
     <Compile Include="Assets\Character\Scripts\BasicBehaviour.cs" />
+    <Compile Include="Assets\POV_Camera2.cs" />
     <Compile Include="Assets\Script\ToolTip.cs" />
     <Compile Include="Assets\Character\Scripts\AimBehaviourBasic.cs" />
     <Compile Include="Assets\Character\Scripts\MoveBehaviour.cs" />
@@ -96,6 +97,7 @@
     <Compile Include="Assets\Script\Harvestable.cs" />
     <Compile Include="Assets\Script\Grid3D.cs" />
     <Compile Include="Assets\Script\PointDetectionEdge.cs" />
+    <Compile Include="Assets\IgniteCoders\Simple Water Shader\Resources\WaterReflection.cs" />
     <Compile Include="Assets\Script\Item.cs" />
     <Compile Include="Assets\Script\ElementsRequired.cs" />
     <Compile Include="Assets\Script\RecipeData.cs" />
