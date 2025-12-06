@@ -196,9 +196,7 @@ MonoBehaviour:
   - Item: {fileID: 11400000, guid: 2b9a84d0423038741a0f87481a5c3e2f, type: 2}
     dropChance: 100
   - Item: {fileID: 11400000, guid: 2b9a84d0423038741a0f87481a5c3e2f, type: 2}
-    dropChance: 100
-  - Item: {fileID: 11400000, guid: 2b9a84d0423038741a0f87481a5c3e2f, type: 2}
-    dropChance: 60
+    dropChance: 80
   disableKinematicsOnHarvest: 0
   destroyDelay: 0
   Tool: 1

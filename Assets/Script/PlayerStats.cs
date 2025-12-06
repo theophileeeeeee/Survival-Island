@@ -18,6 +18,8 @@ public class PlayerStats : MonoBehaviour
 
     [SerializeField]
     private Image healthBarFill;
+    [SerializeField]
+    public GameObject deathPanel;
 
     [SerializeField]
     private float healthDecreaseRateForHungerAndThirst;
@@ -51,6 +53,7 @@ public class PlayerStats : MonoBehaviour
 
     void Awake()
     {
+        deathPanel.SetActive(false);
         currentHealth = maxHealth;
         currentHunger = maxHunger;
         currentThirst = maxThirst;
@@ -58,6 +61,7 @@ public class PlayerStats : MonoBehaviour
 
     void Update()
     {
+        
         UpdateHungerAndThirstBarsFill();
 
         if(Input.GetKeyDown(KeyCode.K))
@@ -91,6 +95,7 @@ public class PlayerStats : MonoBehaviour
 
         // Bloque le mouvement du joueur + mode inspection
         playerMovementScript.canMove = false;
+        deathPanel.SetActive(true);
 
         // On bloque la diminution des barres de faim et soif
         hungerDecreaseRate = 0;

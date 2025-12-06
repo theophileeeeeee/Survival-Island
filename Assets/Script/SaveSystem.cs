@@ -95,7 +95,10 @@ public class SaveSystem : MonoBehaviour
         string path = Application.persistentDataPath + "/savedData.json";
         string json = System.IO.File.ReadAllText(path);
         SaveData data = JsonUtility.FromJson<SaveData>(json);
-        playerTransform.position = data.playerPosition;
+        if(!MainMenu.respawnAuto)
+        {
+            playerTransform.position = data.playerPosition;
+        }
         equipment.LoadEquipments(new ItemData[]{
             data.equipHead,
             data.equipChest,

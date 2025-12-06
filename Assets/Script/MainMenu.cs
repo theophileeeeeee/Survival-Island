@@ -8,6 +8,7 @@ using System.IO;
 public class MainMenu : MonoBehaviour
 {
     public static bool loadSavedData;
+    public static bool respawnAuto;
 
     [Header("UI References")]
     [SerializeField] private Button clearDataButton;
@@ -19,6 +20,7 @@ public class MainMenu : MonoBehaviour
 
     [Header("Audio")]
     [SerializeField] SaveSystem saveSystem;
+    [SerializeField] PlayerStats playerStats;
     [SerializeField] Button saveButton;
     [SerializeField] Toggle FullCreenToogle;
     public AudioMixer audioMixer;
@@ -55,10 +57,11 @@ public class MainMenu : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            ChangePanelState();
-        }
+if (Input.GetKeyDown(KeyCode.Escape) && !playerStats.deathPanel.activeSelf)
+{
+    ChangePanelState();
+}
+
 
         if (saveButton != null)
         {
@@ -178,6 +181,12 @@ public class MainMenu : MonoBehaviour
     public void LoadGameButton()
     {
         loadSavedData = true;
+        SceneManager.LoadScene("Scene");
+    }
+    public void RespawnButton()
+    {
+        loadSavedData = true;
+        respawnAuto = true;
         SceneManager.LoadScene("Scene");
     }
 
