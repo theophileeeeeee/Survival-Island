@@ -72,6 +72,7 @@
     <Compile Include="Assets\Character\Scripts\ThirdPersonOrbitCamBasic.cs" />
     <Compile Include="Assets\Script\Recipe.cs" />
     <Compile Include="Assets\Script\UIManager.cs" />
+    <Compile Include="Assets\GetAllItemsScript.cs" />
     <Compile Include="Assets\Script\BowSystem.cs" />
     <Compile Include="Assets\Script\ItemsActionSystem.cs" />
     <Compile Include="Assets\Script\SaveSystem.cs" />
@@ -79,6 +80,7 @@
     <Compile Include="Assets\Script\AttackBehaviour.cs" />
     <Compile Include="Assets\Script\CollisionDetectionEdge.cs" />
     <Compile Include="Assets\Character\Scripts\BasicBehaviour.cs" />
+    <Compile Include="Assets\FootSound.cs" />
     <Compile Include="Assets\POV_Camera2.cs" />
     <Compile Include="Assets\Script\ToolTip.cs" />
     <Compile Include="Assets\Character\Scripts\AimBehaviourBasic.cs" />

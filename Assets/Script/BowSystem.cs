@@ -50,16 +50,19 @@ public class BowSystem : MonoBehaviour
         {
             StartAiming();
             StartCoroutine(TrajectoryRoutine());
+            StartCoroutine(aimBehaviour.ToggleAimOff());
         }
         if (isAiming)
         {
             DrawTrajectory();
+            StartCoroutine(aimBehaviour.ToggleAimOff());
         }
 
         // Fin visée
         if (Input.GetMouseButtonUp(1))
         {
             StopAiming();
+            StartCoroutine(aimBehaviour.ToggleAimOff());
         }
 
         // --- Tir protégé : seulement si trajectoire prête ---

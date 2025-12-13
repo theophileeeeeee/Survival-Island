@@ -57,10 +57,10 @@ public class MainMenu : MonoBehaviour
 
     void Update()
     {
-if (Input.GetKeyDown(KeyCode.Escape) && !playerStats.deathPanel.activeSelf)
-{
-    ChangePanelState();
-}
+    if (Input.GetKeyDown(KeyCode.Escape) && !playerStats.deathPanel.activeSelf)
+    {
+        ChangePanelState();
+    }
 
 
         if (saveButton != null)
